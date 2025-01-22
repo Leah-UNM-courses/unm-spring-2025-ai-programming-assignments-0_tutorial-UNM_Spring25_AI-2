@@ -21,44 +21,55 @@ jobs:
         setup-command: ''
         command: cd 0_tutorial && python autograder.py -q q1
         input: ''
-        expected-output: |-
-          Question q1
-          ===========
-
-          *** PASS: test_cases/q1/addition1.test
-          ***     add(a,b) returns the sum of a and b
-          *** PASS: test_cases/q1/addition2.test
-          ***     add(a,b) returns the sum of a and b
-          *** PASS: test_cases/q1/addition3.test
-          ***     add(a,b) returns the sum of a and b
-
-          ### Question q1: 1/1 ###
+        expected-output: "Question q1\n===========\n\nPassed a = 1 and b = 1, returning
+          a + b = 2\n*** PASS: test_cases/q1/addition1.test\n*** \tadd(a,b) returns
+          the sum of a and b\nPassed a = 2 and b = 3, returning a + b = 5\n*** PASS:
+          test_cases/q1/addition2.test\n*** \tadd(a,b) returns the sum of a and b\nPassed
+          a = 10 and b = -2.1, returning a + b = 7.9\n*** PASS: test_cases/q1/addition3.test\n***
+          \tadd(a,b) returns the sum of a and b\n\n### Question q1: 1/1 ###"
         comparison-method: contains
         timeout: 1
         max-score: 10
-    - name: All tests
-      id: all-tests
+    - name: Q2
+      id: q2
       uses: classroom-resources/autograding-io-grader@v1
       with:
-        test-name: All tests
+        test-name: Q2
         setup-command: ''
-        command: 'cd 0_tutorial && python autograder.py '
+        command: cd 0_tutorial && python autograder.py -q q2
         input: ''
-        expected-output: |-
-          Provisional grades
-          ==================
-          Question q1: 1/1
-          Question q2: 1/1
-          Question q3: 1/1
-          ------------------
-          Total: 3/3
+        expected-output: "Question q2\n===========\n\n*** PASS: test_cases/q2/food_price1.test\n***
+          \tbuyLotsOfFruit correctly computes the cost of the order\n*** PASS: test_cases/q2/food_price2.test\n***
+          \tbuyLotsOfFruit correctly computes the cost of the order\n*** PASS: test_cases/q2/food_price3.test\n***
+          \tbuyLotsOfFruit correctly computes the cost of the order\n\n### Question
+          q2: 1/1 ###"
         comparison-method: contains
         timeout: 1
-        max-score: 10
+        max-score: 20
+    - name: Q3
+      id: q3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Q3
+        setup-command: ''
+        command: cd 0_tutorial && autograder.py -q q3
+        input: ''
+        expected-output: "Question q3\n===========\n\nWelcome to shop1 fruit shop\nWelcome
+          to shop2 fruit shop\n*** PASS: test_cases/q3/select_shop1.test\n*** \tshopSmart(order,
+          shops) selects the cheapest shop\nWelcome to shop1 fruit shop\nWelcome to
+          shop2 fruit shop\n*** PASS: test_cases/q3/select_shop2.test\n*** \tshopSmart(order,
+          shops) selects the cheapest shop\nWelcome to shop1 fruit shop\nWelcome to
+          shop2 fruit shop\nWelcome to shop3 fruit shop\n*** PASS: test_cases/q3/select_shop3.test\n***
+          \tshopSmart(order, shops) selects the cheapest shop\n\n### Question q3:
+          1/1 ###"
+        comparison-method: contains
+        timeout: 1
+        max-score: 20
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         Q1_RESULTS: "${{steps.q1.outputs.result}}"
-        ALL-TESTS_RESULTS: "${{steps.all-tests.outputs.result}}"
+        Q2_RESULTS: "${{steps.q2.outputs.result}}"
+        Q3_RESULTS: "${{steps.q3.outputs.result}}"
       with:
-        runners: q1,all-tests
+        runners: q1,q2,q3
